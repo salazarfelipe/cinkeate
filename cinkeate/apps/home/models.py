@@ -2,88 +2,98 @@ from django.db import models
 
 class Programa(models.Model):
 	nombre = models.CharField(max_length=100)
-	#ISCS? que campo es este?
-	#Semaforo seria otra clase (tabla) ?
+	codigoPrograma = models.CharField(max_length=30)
+	semaforo = models.URLField(blank=True);
 	def __unicode__(self):
 		return self.nombre	
 
 class Usuario(models.Model):
-	nombre = models.CharField(max_length=100)
-	apellido = models.CharField(max_length=100)
+	nombres = models.CharField(max_length=100)
+	apellidos = models.CharField(max_length=100)
 	correo = models.EmailField()
 	clave = models.CharField(max_length=30)
 	fechaNacimiento = models.DateField()
 	idPrograma = models.ForeignKey(Programa)
 	semestre = models.IntegerField()
-	telefono = models.CharField(max_length=20)
+	telefono = models.CharField(max_length=20,blank=True)
 	def __unicode__(self):
-		return self.nombre
+		return self.nombres+" "+self.apellidos
 
 class Materia(models.Model):
 	nombre = models.CharField(max_length=100)
 	codigo = models.CharField(max_length=100 , primary_key=True)
-	#idPrograma = models.ForeignKey(Programa) #0
-	tematica = models.TextField()
+	idPrograma = models.ForeignKey(Programa) #0
+	tematica = models.TextField(blank=True)
 	def __unicode__(self):
 		return self.nombre
 
 class Profesor(models.Model):
 	nombre = models.CharField(max_length=100)
 	apellido = models.CharField(max_length=100)
-	nick = models.CharField(max_length=100)
-	correo = models.EmailField()	
+	nick = models.CharField(max_length=100)	
 	idPrograma = models.ForeignKey(Programa)
-	correo1 = models.EmailField()
-	correo2 = models.EmailField()
-	idMateria = models.ManyToManyField(Materia) #1	
+	correo1 = models.EmailField(blank=True)
+	correo2 = models.EmailField(blank=True)
+	idMateria = models.ManyToManyField(Materia) #1Profesor_Materia
 	def __unicode__(self):
-		return self.nombre
+		return self.nombre+" "+self.apellido
 
 
 class Parcial(models.Model):
 	OPCIONES_DIFICULTAD = zip( range(1,6), ('Refacil','Facil','Normal','Dificil','Redificil'))
 	OPCIONES_NOTA = zip((num/10.0 for num in range(0,51,1)),(num/10.0 for num in range(0,51,1))) 
 	OPCIONES_SEMESTRE = zip(range(1,13),range(1,13)) 
-
 	idMateria = models.ForeignKey(Materia)
+	idUsuario = models.ForeignKey(Usuario)
 	idProfesor = models.ForeignKey(Profesor)
 	dificultad = models.IntegerField(choices=OPCIONES_DIFICULTAD, default=3) #2
-	#calificacion  ? es diferente a dificultad y nota?	
-	nota = models.FloatField(choices=OPCIONES_NOTA)#3
+	calificacion  = models.FloatField()
+	numCalificaciones = models.IntegerField()
+	nota = models.FloatField(choices=OPCIONES_NOTA)
 	fecha = models.DateField(help_text='Aproximada')
 	semestre = models.IntegerField(choices=OPCIONES_SEMESTRE)
-
+	def __unicode__(self):
+		return "Parcial de %s"%unicode(self.idMateria)
   
 class Hoja_Parcial(models.Model):
-	idParcial = models.ForeignKey(Parcial)	
+	idParcial = models.ForeignKey(Parcial)
+	archivo = models.FileField(upload_to='/parciales')	#Definir el upload_to
+	tipo = models.CharField(max_length=30)
 	numero = models.PositiveIntegerField()
 	formato = models.CharField(max_length=10)
 	def __unicode__(self):
-		return "hoja "+self.numero
-  
+		return "Hoja %d de %s" %(self.numero,unicode(self.idParcial))
 
+class Actividad(models.Model):
+  	idUsuario = models.ForeignKey(Usuario)
+  	tipo = models.CharField(max_length=20)
+  	fecha = models.DateField(auto_now_add=True)
+  	def __unicode__(self):
+		return "%s por %s" %(self.tipo,unicode(self.idUsuario))
 
+class Actividad_Materia(models.Model):
+  	idActividad = models.ForeignKey(Actividad)
+  	idMateria = models.ForeignKey(Materia)
+  	def __unicode__(self):
+		return "%s (%s)" %(unicode(self.idActividad),unicode(self.idMateria))
+
+class Actividad_Parcial(models.Model):
+  	idActividad = models.ForeignKey(Actividad)
+  	idParcial = models.ForeignKey(Parcial)
+  	def __unicode__(self):
+		return "%s (%s)" %(unicode(self.idActividad),unicode(self.idParcial))
+
+class Comentario_Parcial(models.Model):  	
+  	idParcial = models.ForeignKey(Parcial)
+  	idUsuario = models.ForeignKey(Usuario)
+  	texto = models.TextField(max_length=300)
+  	def __unicode__(self):
+		return "Comentario de %s en %s" %(unicode(self.idUsuario),unicode(self.idParcial))
+  	
 """
-#0.1 Si activo este campo como ForeignKey me saca error al intentar ver las materias (esto no pasa con lso otros ForeignKey)
-0.2 Si activo el campo tambien me saca error al ver los parciales
-Lo curiosos de los dos y es que al intengar agregar no pone problema
+No se que ruta definir para el upload_to, por lo tanto no pude probar la subida de archivos y las hojas_parcial
 
-#1Tengo entendido que esto ya me crea la relacion de Profesor-Materias, cito la guia:
-Behind the scenes, Django creates an intermediary join table to represent the many-to-many relationship.
-It doesn't matter which model gets the ManyToManyField, but you need it in only one of the models - not in both.
-
-#2 Para poner un rango se puede hacer de varias maneras:
-crear una nueva clase IntegerRangeField por ej que reciba los rangos como param
-#se puede hacer con validadores luego
-#Se puee hacer con el parametro choices, me parecio la mas simple y fue la que tome
-
-#3 Esta fue un toque mas complicada porque el range no soporta floats, pero en realidad hice lo mismo que para las opciones de dificultad
-Tambien se puede definir nota asi-> nota = models.FloatField(max_digits=2, decimal_places=1) 
-para que tenga un decimal  y un entero, pero faltaria definir que el rango es de 0 a 5
-
-Falta definir que valores TIENEN que ir (not null o blank=false)
-
-Me surgieron varias dudas con respecto a las actividades entonces mejor no lo hice por ahora.
+falta devfinir not null o blank=false
 
 Las clases que llamo desde un ForeignKey tienen que estar arriba en el codigo  :S wtf?
 """
