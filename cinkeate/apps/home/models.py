@@ -82,6 +82,13 @@ class Actividad_Parcial(models.Model):
   	idParcial = models.ForeignKey(Parcial)
   	def __unicode__(self):
 		return "%s (%s)" %(unicode(self.idActividad),unicode(self.idParcial))
+
+class Comentario_Parcial(models.Model):  	
+  	idParcial = models.ForeignKey(Parcial)
+  	idUsuario = models.ForeignKey(Usuario)
+  	texto = models.TextField(max_length=300)
+  	def __unicode__(self):
+		return "Comentario de %s en %s" %(unicode(self.idUsuario),unicode(self.idParcial))
   	
 """
 No se que ruta definir para el upload_to, por lo tanto no pude probar la subida de archivos y las hojas_parcial
