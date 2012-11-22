@@ -56,8 +56,12 @@ class Parcial(models.Model):
 		return "Parcial de %s"%unicode(self.idMateria)
   
 class Hoja_Parcial(models.Model):
+
+	def url(self,filename):
+		return "Parciales/%s/%s/%s/%s"%(self.idParcial.idMateria, self.idParcial.idProfesor, self.idParcial , filename)
+
 	idParcial = models.ForeignKey(Parcial)
-	archivo = models.FileField(upload_to='/parciales')	#Definir el upload_to
+	archivo = models.FileField(upload_to=url)
 	tipo = models.CharField(max_length=30)
 	numero = models.PositiveIntegerField()
 	formato = models.CharField(max_length=10)
@@ -93,7 +97,7 @@ class Comentario_Parcial(models.Model):
 """
 No se que ruta definir para el upload_to, por lo tanto no pude probar la subida de archivos y las hojas_parcial
 
-falta devfinir not null o blank=false
+falta definir not null o blank=false
 
 Las clases que llamo desde un ForeignKey tienen que estar arriba en el codigo  :S wtf?
 """
