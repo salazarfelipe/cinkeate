@@ -3,15 +3,12 @@ from django.db import models
 class Programa(models.Model):
 	nombre = models.CharField(max_length=100)
 	codigoPrograma = models.CharField(max_length=30)
-	semaforo = models.URLField(blank=True);
+	semaforo = models.URLField(blank=True); #link a pensum oficial
 	def __unicode__(self):
 		return self.nombre	
 
+# Extender de User 
 class Usuario(models.Model):
-	nombres = models.CharField(max_length=100)
-	apellidos = models.CharField(max_length=100)
-	correo = models.EmailField()
-	clave = models.CharField(max_length=30)
 	fechaNacimiento = models.DateField()
 	idPrograma = models.ForeignKey(Programa)
 	semestre = models.IntegerField()
@@ -20,17 +17,20 @@ class Usuario(models.Model):
 		return self.nombres+" "+self.apellidos
 
 class Materia(models.Model):
+	OPCIONES_SEMESTRE = zip(range(1,13),range(1,13)) 
 	nombre = models.CharField(max_length=100)
 	codigo = models.CharField(max_length=100 , primary_key=True)
 	idPrograma = models.ForeignKey(Programa) #0
 	tematica = models.TextField(blank=True)
+	semestre = models.IntegerField(choices=OPCIONES_SEMESTRE)
+
 	def __unicode__(self):
 		return self.nombre
 
 class Profesor(models.Model):
 	nombre = models.CharField(max_length=100)
 	apellido = models.CharField(max_length=100)
-	nick = models.CharField(max_length=100)	
+	nick = models.CharField(max_length=100, blank=True)	
 	idPrograma = models.ForeignKey(Programa)
 	correo1 = models.EmailField(blank=True)
 	correo2 = models.EmailField(blank=True)
@@ -42,18 +42,19 @@ class Profesor(models.Model):
 class Parcial(models.Model):
 	OPCIONES_DIFICULTAD = zip( range(1,6), ('Refacil','Facil','Normal','Dificil','Redificil'))
 	OPCIONES_NOTA = zip((num/10.0 for num in range(0,51,1)),(num/10.0 for num in range(0,51,1))) 
-	OPCIONES_SEMESTRE = zip(range(1,13),range(1,13)) 
+	
+	numeroParcial = models.IntegerField( range (1,10)) # El numero del parcial eg: parcial 2 CISCO
 	idMateria = models.ForeignKey(Materia)
 	idUsuario = models.ForeignKey(Usuario)
 	idProfesor = models.ForeignKey(Profesor)
 	dificultad = models.IntegerField(choices=OPCIONES_DIFICULTAD, default=3) #2
-	calificacion  = models.FloatField()
-	numCalificaciones = models.IntegerField()
+	numCalificaciones = models.IntegerField() #calificaciones hechas por los usuarios
+	calificacion  = models.FloatField() #calificacion de los usuarios
 	nota = models.FloatField(choices=OPCIONES_NOTA)
 	fecha = models.DateField(help_text='Aproximada')
-	semestre = models.IntegerField(choices=OPCIONES_SEMESTRE)
+	fechaSubida = models.DateField(auto_now_add=True)
 	def __unicode__(self):
-		return "Parcial de %s"%unicode(self.idMateria)
+		return "Parcial %s"%unicode(self.id)
   
 class Hoja_Parcial(models.Model):
 
@@ -62,9 +63,9 @@ class Hoja_Parcial(models.Model):
 
 	idParcial = models.ForeignKey(Parcial)
 	archivo = models.FileField(upload_to=url)
-	tipo = models.CharField(max_length=30)
-	numero = models.PositiveIntegerField()
-	formato = models.CharField(max_length=10)
+	#tipo = models.CharField(max_length=30)
+	numero = models.PositiveIntegerField() # Se pueden generar archivos pdf o comprimidos que unen los archivos en unno solo
+	formato = models.CharField(max_length=10) 
 	def __unicode__(self):
 		return "Hoja %d de %s" %(self.numero,unicode(self.idParcial))
 
@@ -95,9 +96,5 @@ class Comentario_Parcial(models.Model):
 		return "Comentario de %s en %s" %(unicode(self.idUsuario),unicode(self.idParcial))
   	
 """
-No se que ruta definir para el upload_to, por lo tanto no pude probar la subida de archivos y las hojas_parcial
-
-falta definir not null o blank=false
-
 Las clases que llamo desde un ForeignKey tienen que estar arriba en el codigo  :S wtf?
 """
