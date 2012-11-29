@@ -4,6 +4,16 @@
 		
 	</head>
 	<body>
-		Hola Mundo
+		{{ contenido }} <br>
+		{% if materias %}
+			{% for m in materias  %}
+				<p>{{ m.nombre }}</p>
+				<p>{{ m.semestre }}</p>
+				<p>{{ m.idPrograma }}</p>
+			{% endfor %}
+		{% else %}
+			No se recupero ningun registro
+		{% endif %}
+		
 	</body>
 </html>
