@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		{% block css 	 %}		{% endblock css 	%}
+		{% block scripts %} 	{% endblock scripts %}
+	</head>
+	<body>
+		{% block contenido %}
+		<header>
+		{% block header %}	
+		{% endblock header %}
+		</header>
+		<section>
+			{% block seccionAjax %}
+				
+			{% endblock seccionAjax %}
+		</section>
+		{% endblock contenido %}
+	</body>
+</html>

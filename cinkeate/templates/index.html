@@ -1,19 +1,25 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-		
-	</head>
-	<body>
-		{{ contenido }} <br>
-		{% if materias %}
-			{% for m in materias  %}
-				<p>{{ m.nombre }}</p>
-				<p>{{ m.semestre }}</p>
-				<p>{{ m.idPrograma }}</p>
-			{% endfor %}
-		{% else %}
-			No se recupero ningun registro
-		{% endif %}
-		
-	</body>
-</html>
+{% extends "base.html" %}
+{% block contenido %}
+	{% block header %}
+	<h1>Cinkeate</h1>
+	{% endblock header %}
+	{% block seccionAjax %}
+	<h2>Login</h2>
+	<form action="/login/" method="POST">
+	{% csrf_token %}
+		<label for="username">Usuario    </label><input type="text" name="username" id="username">
+		<label for="password">Contrasena </label><input type="password" name="password" id="password">
+		<input type="submit" value="Login">
+	</form>
+	<h2>Registrate!</h2>
+	<form action="" method="POST">
+	{% csrf_token %}
+		<label for="username">Nombre de usuario</label><input type="text" name="username">
+		<label for="email">Email</label><input type="email" name="email">
+		<label for="password">Contrasena</label><input type="password" name="password">
+		<label for="password">Repite Contrasena</label><input type="password" name="password2">
+		<input type="submit" value="Registrarse">
+	</form>
+
+	{% endblock seccionAjax %}
+{% endblock contenido %}

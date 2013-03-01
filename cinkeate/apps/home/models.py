@@ -16,6 +16,7 @@ class Usuario(models.Model):
 	def __unicode__(self):
 		return self.nombres+" "+self.apellidos
 
+
 class Materia(models.Model):
 	OPCIONES_SEMESTRE = zip(range(1,13),range(1,13)) 
 	nombre = models.CharField(max_length=100)
@@ -38,6 +39,9 @@ class Profesor(models.Model):
 	def __unicode__(self):
 		return self.nombre+" "+self.apellido
 
+	class Meta:
+		verbose_name_plural=u'Profesores'
+
 
 class Parcial(models.Model):
 	OPCIONES_DIFICULTAD = zip( range(1,6), ('Refacil','Facil','Normal','Dificil','Redificil'))
@@ -55,6 +59,9 @@ class Parcial(models.Model):
 	fechaSubida = models.DateField(auto_now_add=True)
 	def __unicode__(self):
 		return "Parcial %s"%unicode(self.id)
+
+	class Meta:
+		verbose_name_plural=u'Parciales'
   
 class Hoja_Parcial(models.Model):
 
@@ -69,6 +76,9 @@ class Hoja_Parcial(models.Model):
 	def __unicode__(self):
 		return "Hoja %d de %s" %(self.numero,unicode(self.idParcial))
 
+	class Meta:
+		verbose_name_plural=u'Hojas de Parciales'
+
 class Actividad(models.Model):
   	idUsuario = models.ForeignKey(Usuario)
   	tipo = models.CharField(max_length=20)
@@ -76,11 +86,17 @@ class Actividad(models.Model):
   	def __unicode__(self):
 		return "%s por %s" %(self.tipo,unicode(self.idUsuario))
 
+	class Meta:
+		verbose_name_plural=u'Actividades'
+
 class Actividad_Materia(models.Model):
   	idActividad = models.ForeignKey(Actividad)
   	idMateria = models.ForeignKey(Materia)
   	def __unicode__(self):
 		return "%s (%s)" %(unicode(self.idActividad),unicode(self.idMateria))
+
+	class Meta:
+		verbose_name_plural=u'Actividades en Materias'
 
 class Actividad_Parcial(models.Model):
   	idActividad = models.ForeignKey(Actividad)
@@ -88,12 +104,18 @@ class Actividad_Parcial(models.Model):
   	def __unicode__(self):
 		return "%s (%s)" %(unicode(self.idActividad),unicode(self.idParcial))
 
+	class Meta:
+		verbose_name_plural=u'Actividades en Parciales'
+
 class Comentario_Parcial(models.Model):  	
   	idParcial = models.ForeignKey(Parcial)
   	idUsuario = models.ForeignKey(Usuario)
   	texto = models.TextField(max_length=300)
   	def __unicode__(self):
 		return "Comentario de %s en %s" %(unicode(self.idUsuario),unicode(self.idParcial))
+
+	class Meta:
+		verbose_name_plural=u'Comentarios de parciales'
   	
 """
 Las clases que llamo desde un ForeignKey tienen que estar arriba en el codigo  :S wtf?
