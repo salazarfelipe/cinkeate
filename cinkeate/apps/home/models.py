@@ -63,10 +63,11 @@ class Parcial(models.Model):
 	class Meta:
 		verbose_name_plural=u'Parciales'
   
+  
 class Hoja_Parcial(models.Model):
 
 	def url(self,filename):
-		return "Parciales/%s/%s/%s/%s"%(self.idParcial.idMateria, self.idParcial.idProfesor, self.idParcial , filename)
+		return "images/Parciales/%s/%s/%s/%s"%(self.idParcial.idMateria, self.idParcial.idProfesor, self.idParcial , filename)
 
 	idParcial = models.ForeignKey(Parcial)
 	archivo = models.FileField(upload_to=url)
