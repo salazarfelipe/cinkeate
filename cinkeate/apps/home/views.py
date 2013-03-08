@@ -15,6 +15,15 @@ def login_view(request):
 		usuario = authenticate(username=username, password=password)
 		if usuario is not None and usuario.is_active:
 			login(request, usuario)
-			return HttpResponseRedirect('/admin')
+			if usuario.is_staff:
+				return HttpResponseRedirect('/admin')
+			else:
+				return HttpResponseRedirect('/home')
+
 	except:
 		return HttpResponseRedirect('/')
+	loginFailed = True
+	return render_to_response('index.html', locals(), context_instance = RequestContext(request) )
+
+def home_view(request):
+	return render_to_response('home.html',locals(), context_instance = RequestContext(request))

@@ -23,85 +23,99 @@
             <section class="content">
                 <div id="form_wrapper" class="form_wrapper">
                     <form class="register">
-                        <h3>Registro</h3>
-                        <div class="column">
-                            <div>
-                                <label>Nombre:</label>
-                                <input type="text" />
-                                <span class="error">This is an error</span>
+                        <fieldset>
+                            
+                            <h3>Registro</h3>
+                            <div class="column">
+                                <div>
+                                    <label>Nombre:</label>
+                                    <input type="text" />
+                                    <span class="error">This is an error</span>
+                                </div>
+                                <div>
+                                    <label>Apellido:</label>
+                                    <input type="text" />
+                                    <span class="error">This is an error</span>
+                                </div>
+                                <div>
+                                    <label>Email:</label>
+                                    <input type="text" placeholder="ejemplo@mail.com"/>
+                                    <span class="error">This is an error</span>
+                                </div>
                             </div>
-                            <div>
-                                <label>Apellido:</label>
-                                <input type="text" />
-                                <span class="error">This is an error</span>
+                            <div class="column">
+                                <div>
+                                    <label>Username:</label>
+                                    <input type="text"/>
+                                    <span class="error">This is an error</span>
+                                </div>
+                                <div>
+                                    <label>Contraseña:</label>
+                                    <input type="text" />
+                                    <span class="error">This is an error</span>
+                                </div>
+                                <div>
+                                    <label>Confirma Contraseña:</label>
+                                    <input type="password" />
+                                    <span class="error">This is an error</span>
+                                </div>
                             </div>
-                            <div>
-                                <label>Email:</label>
-                                <input type="text" placeholder="ejemplo@mail.com"/>
-                                <span class="error">This is an error</span>
+                            <div class="bottom">
+                                <div class="remember">
+                                    <input type="checkbox" />
+                                    <span>Send me updates</span>
+                                </div>
+                                <input type="submit" value="Register" />
+                                <a href="index.html" rel="login" class="linkform">Ya estás registrado? Inicia Sesión</a>
+                                <div class="clear"></div>
                             </div>
-                        </div>
-                        <div class="column">
-                            <div>
-                                <label>Username:</label>
-                                <input type="text"/>
-                                <span class="error">This is an error</span>
-                            </div>
-                            <div>
-                                <label>Contraseña:</label>
-                                <input type="text" />
-                                <span class="error">This is an error</span>
-                            </div>
-                            <div>
-                                <label>Confirma Contraseña:</label>
-                                <input type="password" />
-                                <span class="error">This is an error</span>
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="remember">
-                                <input type="checkbox" />
-                                <span>Send me updates</span>
-                            </div>
-                            <input type="submit" value="Register" />
-                            <a href="index.html" rel="login" class="linkform">Ya estás registrado? Inicia Sesión</a>
-                            <div class="clear"></div>
-                        </div>
+                        </fieldset>
                     </form>
                     <form class="login active" method="POST" action="/login/" name="login">
                         {% csrf_token %}
-                        <h3>Inicio de Sesion</h3>
-                        <div>
-                            <label>Username o Email:</label>
-                            <input type="text" required/>
-                            <span class="error">This is an error</span>
-                        </div>
-                        <div>
-                            <label>Contraseña:</label>
-                            <input type="password" required />
-                            <span class="error">This is an error</span>
-                            <label ><a href="forgot_password.html" rel="forgot_password" class="forgot linkform">Olvidaste tu contraseña?</a></label>
-                        </div>
-                        <div class="bottom">
-                            <div class="remember"><input type="checkbox" /><span>Recordarme</span></div>
-                            <input type="submit" value="Login" name="login"></input>
-                            <a href="register.html" rel="register" class="linkform">No tienes cuenta? Regístrate aquí</a>
-                            <div class="clear"></div>
-                        </div>
+                        <fieldset>                 
+                            <h3>Inicio de Sesion</h3>
+                            <div>
+                                <label>Username o Email:</label>
+                                <input type="text" name="username" required/>
+                                <span class="error" id="username">Usario invalido</span>
+                            </div>
+                            <div>
+                                <label>Contraseña:</label>
+                                <input type="password" required name="password" />
+                                <span class="error" id="password">Contrasena Invalida</span>
+                                <label ><a href="forgot_password.html" rel="forgot_password" class="forgot linkform">Olvidaste tu contraseña?</a></label>
+                            </div>
+                            <div class="bottom">
+                                <div class="remember"><input type="checkbox" /><span>Recordarme</span></div>
+                                <input type="submit" value="Login" name="login"/>
+                                <a href="register.html" rel="register" class="linkform">No tienes cuenta? Regístrate aquí</a>
+                                <div class="clear"></div>
+                            </div>
+                            {% if loginFailed %}
+                                <script>
+                                   document.getElementById('username').style.visibility = "visible";
+                                    document.getElementById('password').style.visibility = "visible";
+                                </script>
+                            {% endif %}
+                        </fieldset>
                     </form>
-                    <form class="forgot_password">
-                        <h3>Contraseña Perdida</h3>
-                        <div>
-                            <label>Username o Email:</label>
-                            <input type="text" />
-                            <span class="error">This is an error</span>
-                        </div>
-                        <div class="bottom">
-                            <input type="submit" value="Send reminder"></input>
-                            <a href="index.html" rel="login" class="linkform">La recordaste ya? Inicia Sesión</a>
-                            <a href="register.html" rel="register" class="linkform">No tienes cuenta? Registrate aquí</a>
-                            <div class="clear"></div>
-                        </div>
+                    <form class="forgot_password" action="/" method="POST" name="lost">
+                        <fieldset>
+                            <h3>Contraseña Perdida</h3>
+                            <div>
+                                <label>Username o Email:</label>
+                                <input type="text" />
+                                <span class="error">This is an error</span>
+                            </div>
+                            <div class="bottom">
+                                <input type="submit" value="Send reminder" name="lost"/>
+                                <a href="index.html" rel="login" class="linkform">La recordaste ya? Inicia Sesión</a>
+                                <a href="register.html" rel="register" class="linkform">No tienes cuenta? Registrate aquí</a>
+                                <div class="clear"></div>
+                            </div>
+                            
+                        </fieldset>
                     </form>
                 </div>
                 <div class="clear"></div>
@@ -175,10 +189,10 @@
                 which form was submited, and give the class active 
                 to the form you want to show
                 */
-                $form_wrapper.find('input[type="submit"]')
+               /* $form_wrapper.find('input[type="submit"]')
                              .click(function(e){
                                 e.preventDefault();
-                             });    
+                             });    */
             });
         </script>            		
 	{% endblock seccionAjax %}
