@@ -20,49 +20,49 @@
                 
             <section class="content">
                 <div id="form_wrapper" class="form_wrapper">
-                    <form class="register">
-                        <fieldset>
-                            
+                    <form class="register" method="POST" action="/registro/">
+                        {% csrf_token %}
+                        <fieldset>      
                             <h3>Registro</h3>
                             <div class="column">
                                 <div>
                                     <label>Nombre:</label>
-                                    <input type="text" />
+                                    <input type="text" name="nombre" />
                                     <span class="error">This is an error</span>
                                 </div>
                                 <div>
                                     <label>Apellido:</label>
-                                    <input type="text" />
+                                    <input type="text" name="apellido" />
                                     <span class="error">This is an error</span>
                                 </div>
                                 <div>
                                     <label>Email:</label>
-                                    <input type="text" placeholder="ejemplo@mail.com"/>
+                                    <input type="text" placeholder="ejemplo@mail.com" name="email"/>
                                     <span class="error">This is an error</span>
                                 </div>
                             </div>
                             <div class="column">
                                 <div>
                                     <label>Username:</label>
-                                    <input type="text"/>
+                                    <input type="text" name="username"/>
                                     <span class="error">This is an error</span>
                                 </div>
                                 <div>
                                     <label>Contraseña:</label>
-                                    <input type="text" />
+                                    <input type="password" name="pass" />
                                     <span class="error">This is an error</span>
                                 </div>
                                 <div>
                                     <label>Confirma Contraseña:</label>
-                                    <input type="password" />
+                                    <input type="password" name="pass2" />
                                     <span class="error">This is an error</span>
                                 </div>
                             </div>
                             <div class="bottom">
-                                <div class="remember">
+                                <!--<div class="remember">
                                     <input type="checkbox" />
                                     <span>Send me updates</span>
-                                </div>
+                                </div>-->
                                 <input type="submit" value="Register" />
                                 <a href="index.html" rel="login" class="linkform">Ya estás registrado? Inicia Sesión</a>
                                 <div class="clear"></div>

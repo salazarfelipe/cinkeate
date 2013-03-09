@@ -1,41 +1,43 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Programa(models.Model):
-	nombre = models.CharField(max_length=100)
-	codigoPrograma = models.CharField(max_length=30)
-	semaforo = models.URLField(blank=True); #link a pensum oficial
+	nombre 			= models.CharField(max_length=100)
+	codigoPrograma 	= models.CharField(max_length=30)
+	semaforo 		= models.URLField(blank=True); #link a pensum oficial
 	def __unicode__(self):
 		return self.nombre	
 
 # Extender de User 
 class Usuario(models.Model):
-	fechaNacimiento = models.DateField()
-	idPrograma = models.ForeignKey(Programa)
-	semestre = models.IntegerField()
-	telefono = models.CharField(max_length=20,blank=True)
+	user 			= models.ForeignKey(User, related_name='perfil', unique=True)
+	fechaNacimiento = models.DateField(blank=True,null=True)
+	idPrograma 		= models.ForeignKey(Programa)
+	semestre 		= models.IntegerField()
+	telefono 		= models.CharField(max_length=20,blank=True)
 	def __unicode__(self):
 		return self.nombres+" "+self.apellidos
 
 
 class Materia(models.Model):
-	OPCIONES_SEMESTRE = zip(range(1,13),range(1,13)) 
-	nombre = models.CharField(max_length=100)
-	codigo = models.CharField(max_length=100 , primary_key=True)
-	idPrograma = models.ForeignKey(Programa) #0
-	tematica = models.TextField(blank=True)
-	semestre = models.IntegerField(choices=OPCIONES_SEMESTRE)
+	OPCIONES_SEMESTRE 	= zip(range(1,13),range(1,13)) 
+	nombre 				= models.CharField(max_length=100)
+	codigo 				= models.CharField(max_length=100 , primary_key=True)
+	idPrograma 			= models.ForeignKey(Programa) #0
+	tematica 			= models.TextField(blank=True)
+	semestre 			= models.IntegerField(choices=OPCIONES_SEMESTRE)
 
 	def __unicode__(self):
 		return self.nombre
 
 class Profesor(models.Model):
-	nombre = models.CharField(max_length=100)
-	apellido = models.CharField(max_length=100)
-	nick = models.CharField(max_length=100, blank=True)	
-	idPrograma = models.ForeignKey(Programa)
-	correo1 = models.EmailField(blank=True)
-	correo2 = models.EmailField(blank=True)
-	idMateria = models.ManyToManyField(Materia) #1Profesor_Materia
+	nombre 		= models.CharField(max_length=100)
+	apellido 	= models.CharField(max_length=100)
+	nick 		= models.CharField(max_length=100, blank=True)	
+	idPrograma 	= models.ForeignKey(Programa)
+	correo1 	= models.EmailField(blank=True)
+	correo2 	= models.EmailField(blank=True)
+	idMateria 	= models.ManyToManyField(Materia) #1Profesor_Materia
 	def __unicode__(self):
 		return self.nombre+" "+self.apellido
 
