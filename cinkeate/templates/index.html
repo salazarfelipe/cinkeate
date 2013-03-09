@@ -1,8 +1,4 @@
 {% extends "base.html" %}
-{% block css %}
-	<link rel="stylesheet" type="text/css" href="/media/css/style.css" />
-    <link rel="stylesheet" href="/media/css/fancyInput.css">
-{% endblock css %}
 {% block scripts %}
     <script src="/media/js/cufon-yui.js" type="text/javascript"></script>
     <script src="/media/js/ChunkFive_400.font.js" type="text/javascript"></script>
@@ -14,12 +10,14 @@
     </script>
 {% endblock scripts %}
 {% block contenido %}
-	{% block header %}
-	{% endblock header %}
 	{% block seccionAjax %}
-        <div class="wrapper">
+        <section class="span6">
             <h1>Cinkeate</h1>
             <h2>Busca, sube y comparte <span>Parciales</span> en un solo lugar</h2>
+        </section>
+        <section class="span6">
+            <div class="wrapper">
+                
             <section class="content">
                 <div id="form_wrapper" class="form_wrapper">
                     <form class="register">
@@ -84,7 +82,7 @@
                                 <label>Contraseña:</label>
                                 <input type="password" required name="password" />
                                 <span class="error" id="password">Contrasena Invalida</span>
-                                <label ><a href="forgot_password.html" rel="forgot_password" class="forgot linkform">Olvidaste tu contraseña?</a></label>
+                                <a href="forgot_password.html" rel="forgot_password" class="forgot linkform"style="margin-right:30px">Olvidaste tu contraseña?</a>
                             </div>
                             <div class="bottom">
                                 <div class="remember"><input type="checkbox" /><span>Recordarme</span></div>
@@ -102,7 +100,7 @@
                     </form>
                     <form class="forgot_password" action="/" method="POST" name="lost">
                         <fieldset>
-                            <h3>Contraseña Perdida</h3>
+                            <h3>Password Perdida</h3>
                             <div>
                                 <label>Username o Email:</label>
                                 <input type="text" />
@@ -117,11 +115,11 @@
                             
                         </fieldset>
                     </form>
-                </div>
-                <div class="clear"></div>
-            </section>
-        </div>      
-
+                    <div class="clear"></div>
+                </section>
+            </div>      
+            </div>
+        </section>
         <script type="text/javascript">
             $(function() {
                     //the form wrapper (includes all forms)

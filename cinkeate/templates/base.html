@@ -2,20 +2,38 @@
 <html>
 	<head>
 		<script src="/media/js/jquery-1.9.1.min.js"></script>
+		<script src="/meddia/bootstrap/js/bootstrap.js"></script>
+		<link rel="stylesheet" type="text/css" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/bootstrap/css/bootstrap.css">
+
 		{% block css 	 %}		{% endblock css 	%}
 		{% block scripts %} 	{% endblock scripts %}
 	</head>
-	<body>
-		{% block contenido %}
-		<header>
-		{% block header %}	
-		{% endblock header %}
-		</header>
-		<section>
-			{% block seccionAjax %}
+	<body >
+		<header class="header">
+			<div class="logo">
 				
-			{% endblock seccionAjax %}
+			</div>
+			{% if user.is_authenticated %}
+			<nav >
+				<ul class="nav pull-right">
+					<li><a href="/home">{{user.username}}</a></li>
+					<li><a href="/logout">Cerrar Sesion</a></li>
+				</ul>
+			</nav>
+			{% endif %}
+		</header>
+		<section class="container-fluid" style="padding-top:25px;">
+			<div class="row-fluid">
+			{% block contenido %}
+				{% block seccionAjax %}
+					
+				{% endblock seccionAjax %}
+			{% endblock contenido %}
+			</div>
 		</section>
-		{% endblock contenido %}
+		<footer class="footer">
+			<h4 >&copy DFHS Group</h4>
+		</footer>
 	</body>
 </html>

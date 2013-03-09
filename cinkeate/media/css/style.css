@@ -5,7 +5,7 @@
 body{
 	font-family:"Trebuchet MS", "Myriad Pro", Arial, sans-serif;
 	font-size:14px;
-	background:#f4f4f4 url(../images/bg.gif) repeat top left;
+	background:#f4f4f4 url(/media/images/bg.gif) repeat top left;
 	color:#333;
 	text-shadow:1px 1px 1px #fff;
 	overflow-y:scroll;
@@ -31,7 +31,6 @@ p{
 	padding:5px 0px;
 }
 .wrapper{
-	width:960px;
 	margin:20px auto;
 	min-height:550px;
 }
@@ -210,3 +209,38 @@ form.forgot_password{
 	box-shadow: 0px 0px 2px #eaeaea inset;
 	color: #222;
 }
+
+
+
+/* ********************************* *
+ * ******** Plantilla Base ********* *
+ * ********************************* *
+ */
+
+ .header{
+ 	background:#444;
+ 	height: 60px;
+ }
+
+ .logo{
+ 	background: gray;
+ 	border:1px solid black;
+ 	position: absolute;
+ 	top:0;
+ 	left: 47%;
+ 	height: 80px;
+	width: 100px;
+	z-index: 1000;
+ }
+
+ .footer{
+ 	background:#444;
+ 	bottom: 0;
+ 	color: white;
+ 	height: 50px;
+ 	left: 0;
+ 	position: fixed;
+ 	text-align: center;
+ 	text-shadow: 1px 1px 1px #333;
+ 	width: 100%;
+ }
