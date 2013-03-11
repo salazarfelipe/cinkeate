@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block scripts %}
+    <script src="/media/js/cufon-yui.js" type="text/javascript"></script>
+    <script src="/media/js/ChunkFive_400.font.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        Cufon.replace('h1',{ textShadow: '1px 1px #fff'});
+        Cufon.replace('h2',{ textShadow: '1px 1px #fff'});
+        Cufon.replace('h3',{ textShadow: '1px 1px #000'});
+        Cufon.replace('.back');
+    </script>
+{% endblock scripts %}
+{% block contenido %}
+<h2>Complemente sus datos de <span>Perfil</span></h2>        
+    <section class="content">
+        <div id="form_wrapper" class="form_wrapper" style="width:550px;margin-bottom:70px">
+            <form class="register active" method="POST" action="/home/">
+                {% csrf_token %}
+                <fieldset>      
+                    <h3>Datos de Perfil</h3>
+                    <div class="column">
+                        <div>
+                            <label>Fecha de Nacimiento:</label>
+                            <input type="date" name="fecha" required/>
+                            <span class="error" >This is an error</span>
+                        </div>
+                        <div>
+                            <label>Programa:</label>
+                            <select name="programa" id="">
+                            	{% for p in programas  %}
+                            		<option value="{{p.nombre}}">{{ p.nombre }}</option>
+                            	{% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div>
+                            <label>Semestre:</label>
+                            <select name="semestre" id="">
+                            	{% for i in semestres %}
+                            	<option value="{{i}}" name="semestre">{{i}}</option>
+                            	{% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        </div>
+                        <div>
+                            <label>Telefono:</label>
+                            <input type="text" name="telefono" required/>
+                            <span class="error">This is an error</span>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <!--<div class="remember">
+                            <input type="checkbox" />
+                            <span>Send me updates</span>
+                        </div>-->
+                        <input type="submit" value="Guardar y Continuar" />
+                        <div class="clear"></div>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </div>      
+	</section>
+{% endblock contenido %}

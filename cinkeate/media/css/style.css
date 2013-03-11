@@ -105,14 +105,16 @@ form.forgot_password{
 	margin:10px 0px 0px 0px;
 }
 .form_wrapper input[type="text"],
-.form_wrapper input[type="password"]{
+.form_wrapper input[type="password"],
+.form_wrapper input[type="email"],
+.form_wrapper input[type="date"],.form_wrapper input[type="number"],select{
 	border: solid 1px #E5E5E5;
 	background: #FFFFFF;
-	margin: 5px 30px 0px 30px;
-	padding: 9px;
-	display:block;
-	font-size:16px;
-	width:76%;
+	margin: 5px 30px 0px 30px !important;
+	padding: 9px !important;
+	display:block !important;
+	font-size:16px !important;
+	width:76% ;
 	background: 
 		-webkit-gradient(
 			linear,
@@ -134,9 +136,13 @@ form.forgot_password{
 	box-shadow: 0px 0px 8px #f0f0f0;
 }
 .form_wrapper input[type="text"]:focus,
-.form_wrapper input[type="password"]:focus{
+.form_wrapper input[type="password"]:focus,
+.form_wrapper input[type="email"]:focus,
+.form_wrapper input[type="date"]:focus,
+.form_wrapper input[type="number"]:focus{
 	background:#feffef;
 }
+select{height: 38px !important;width: 80% !important}
 .form_wrapper .bottom{
 	background-color:#444;
 	border-top:1px solid #ddd;
@@ -228,7 +234,7 @@ form.forgot_password{
  	position: absolute;
  	top:0;
  	left: 47%;
- 	height: 80px;
+ 	height: 90px;
 	width: 100px;
 	z-index: 1000;
  }

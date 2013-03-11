@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
-from cinkeate.apps.home.models import Materia, Usuario
+from cinkeate.apps.home.models import Materia, Usuario, Programa
 from django.contrib.auth.models import User
 
 # Controla el index o pagina inicial
@@ -69,7 +69,23 @@ def register_view(request):
 
 #Controlador de vista de home *Vista de Perfil proximamente
 def home_view(request):
-	if request.user.is_authenticated():
-		return render_to_response('home.html',locals(), context_instance = RequestContext(request))
+	if request.method == 'POST':
+		fecha = request.POST['fecha']
+		semestre = request.POST['semestre']
+		programa = request.POST['programa']
+		telefono = request.POST['telefono']
+		idPrograma = Programa.objects.get(nombre = programa)
+		perfil = Usuario(user = request.user, fechaNacimiento = fecha, idPrograma = idPrograma, semestre = semestre, telefono = telefono )
+		perfil.save()
+		return HttpResponseRedirect('/home')
 	else:
-		return HttpResponseRedirect('/')
+		if request.user.is_authenticated():
+			try:
+				if request.user.get_profile():
+					return render_to_response('home.html', context_instance = RequestContext(request))	
+			except:
+				programas = Programa.objects.all()
+				semestres = range(1,11)
+				return render_to_response('datos.html',locals(),context_instance = RequestContext(request))
+		else:
+			return HttpResponseRedirect('/')
