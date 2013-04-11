@@ -89,3 +89,12 @@ def home_view(request):
 				return render_to_response('datos.html',locals(),context_instance = RequestContext(request))
 		else:
 			return HttpResponseRedirect('/')
+
+#inicio Darwin
+def lista_materias(request):
+	materias=Materia.objects.all()
+	usuario = request.user
+	perfil= Usuario.objects.get(user=usuario)
+	inscripciones= perfil.materias.all()
+	return render_to_response('semaforo.html', {'usuario':usuario, 'lista':materias, 'perfil':perfil, 'matInsc':inscripciones})
+#fin Darwin

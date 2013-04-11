@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% block css 	 %}	
+
+		<style type="text/css">
+			.materia{
+				position: relative;
+				font-family: verdana;
+				font-size: 16px;
+				margin-left: 75px;
+				margin-top: 30px;
+				width: 150px;
+				height: 80px;
+				background-color: orange;
+				text-align: center;
+				border: 1px solid black;
+				border-radius: 5px;
+				box-shadow: 15px 15px 15px rgba(0,0,0,0.5);
+			}
+			.section{
+				text-align: center;
+				float: left;
+				border: 1px solid gray;
+				width: 300px;
+				height: 800px;
+				background: rgba(0, 99, 66, 0.5);
+				/*background-color: #009966;*/
+				padding: 10px;
+				text-shadow: 0px 0px 0px #fff;
+			}
+			#sema{
+				position: relative;
+				margin: 0px;
+				height: 700px;
+				width: 3300px;
+				top: -26px;
+				left: -23px;
+			}
+			h1{
+				font-size: 18px;
+				text-shadow: 0px 0px 0px #fff;
+			}
+			h3{
+				color:#444;
+				font-size: 16px;
+				padding:0px;
+			}
+			.header{
+				width: 100%;
+			}
+			body{
+				width: 3000px;
+			}
+			/*#enroll{
+				float: right;
+				margin: 5px;
+				background-color: green;
+				border: 1px solid black;
+				border-radius: 5px;
+				width: 15px;
+				position: relative;
+				bottom: 10px;
+				color: white;
+			}*/
+			#enroll{
+				float: right;
+				margin: 5px;
+				position: relative;
+				bottom: 13px;
+				height: 21px;
+			}
+			#disenroll{
+				float: left;
+				margin: 5px;
+				position: relative;
+				bottom: 15px;
+				height: 25px;
+			}
+		</style>
+
+{% endblock css 	%}
+
+{% block scripts %} 
+
+		<script type="text/javascript">
+			function crearMaterias(materias) {
+				var cantidad1=materias.length;
+				for (var i = 0; i < cantidad1; i++) {
+				'{% for dato in lista %}'
+					if (materias[i]=='{{dato.nombre}}') {
+						document.write("<div id=" + materias[i] + " class=\"materia \" onload=\"insc(this)\" onclick=\"changeColor(this)\" onmouseover=\"insc(this)\"><h3>"+ materias[i]  + "</h3><img id=\"enroll\" src=\"/media/images/mas3.png\"><img id=\"disenroll\" src=\"/media/images/menos3.png\"></div>");
+
+					};
+				'{% endfor %}'
+			};
+			};
+			function changeColor(materia) {
+				var inscribir=confirm("Desea inscribir "+ materia.id + "?");
+				var mat=document.getElementById(materia.id);
+				if(inscribir){
+					mat.style.background="blue";
+				'{% for dat in lista %}'
+					if (materia.id =='{{dat.nombre}}') {
+						window.location="http://localhost:8000/materia/{{dat.codigo}} ";
+					}
+				'{% endfor %}'
+				}
+			}
+			function insc(){
+			  	'{% for elem in matInsc %}'
+			  		var mat=document.getElementById('{{elem.nombre}}');
+			  		mat.style.background="indianred";
+			  	'{% endfor %}'
+			}
+		</script>
+		<script type="text/javascript">
+	  	var sem1= [];
+	  	var sem2= [];
+	  	var sem3= [];
+	  	var sem4= [];
+	  	var sem5= [];
+	  	var sem6= [];
+	  	var sem7= [];
+	  	var sem8= [];
+	  	var sem9= [];
+	  	var sem10= [];
+	  	'{% for elemento in lista %}'
+	  		switch(parseInt('{{elemento.semestre}}'))
+	  		{
+	  			case 1: 
+	  				sem1.push('{{elemento.nombre}}');
+	  				break;
+	  			case 2: 
+	  				sem2.push('{{elemento.nombre}}');
+	  				break;
+	  			case 3: 
+	  				sem3.push('{{elemento.nombre}}');
+	  				break;
+	  			case 4: 
+	  				sem4.push('{{elemento.nombre}}');
+	  				break;
+	  			case 5: 
+	  				sem5.push('{{elemento.nombre}}');
+	  				break;
+	  			case 6: 
+	  				sem6.push('{{elemento.nombre}}');
+	  				break;
+	  			case 7: 
+	  				sem7.push('{{elemento.nombre}}');
+	  				break;
+	  			case 8: 
+	  				sem8.push('{{elemento.nombre}}');
+	  				break;
+	  			case 9: 
+	  				sem9.push('{{elemento.nombre}}');
+	  				break;
+	  			case 10: 
+	  				sem10.push('{{elemento.nombre}}');
+	  				break;
+	  		}
+	  	'{% endfor %}'
+	  </script>
+	  <script type="text/javascript">
+	  	var inscritas= [];
+	  	'{% for elem in matInsc %}'
+	  		inscritas.push('elem.nombre')
+	  	'{% endfor %}'
+	  </script>
+{% endblock scripts %}
+
+{% block contenido %}
+
+	<div id="sema">
+		<section class="section"><h1>SEMESTRE 1</h1>
+		<script type="text/javascript">
+			crearMaterias(sem1);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 2</h1>
+		<script type="text/javascript">
+			crearMaterias(sem2);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 3</h1>
+		<script type="text/javascript">
+			crearMaterias(sem3);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 4</h1>
+		<script type="text/javascript">
+			crearMaterias(sem4);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 5</h1>
+		<script type="text/javascript">
+			crearMaterias(sem5);
+		</script>
+		</section >
+		<section class="section"><h1>SEMESTRE 6</h1>
+		<script type="text/javascript">
+			crearMaterias(sem6);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 7</h1>
+		<script type="text/javascript">
+			crearMaterias(sem7);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 8</h1>
+		<script type="text/javascript">
+			crearMaterias(sem8);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 9</h1>
+		<script type="text/javascript">
+			crearMaterias(sem9);
+		</script>
+		</section>
+		<section class="section"><h1>SEMESTRE 10</h1>
+		<script type="text/javascript">
+			crearMaterias(sem10);
+			insc();
+		</script>
+		</section>
+	</div>
+{% endblock contenido %}
