@@ -6,4 +6,6 @@ urlpatterns = patterns('cinkeate.apps.home.views',
     url(r'^logout/$', 'logout_view', name='vistaLogout'),
     url(r'^registro/$','register_view',name="vista_registro"),
     url(r'^home/$', 'home_view', name='vistaHome'),
+    url(r'^semaforo/$', 'lista_materias', name='vistaSemaforo'),
+    url(r'^profile/$', 'profile_view', name='vistaPerfil'),
 )

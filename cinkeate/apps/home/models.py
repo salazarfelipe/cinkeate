@@ -4,19 +4,10 @@ from django.contrib.auth.models import User
 class Programa(models.Model):
 	nombre 			= models.CharField(max_length=100)
 	codigoPrograma 	= models.CharField(max_length=30)
-	semaforo 		= models.URLField(blank=True); #link a pensum oficial
+	semaforo 		= models.URLField(blank=True) #link a pensum oficial
 	def __unicode__(self):
 		return self.nombre	
 
-# Extender de User 
-class Usuario(models.Model):
-	user 			= models.ForeignKey(User, related_name='perfil', unique=True)
-	fechaNacimiento = models.DateField(blank=True,null=True)
-	idPrograma 		= models.ForeignKey(Programa)
-	semestre 		= models.IntegerField()
-	telefono 		= models.CharField(max_length=20,blank=True)
-	def __unicode__(self):
-		return self.user.first_name+" "+self.user.last_name
 
 
 class Materia(models.Model):
@@ -29,6 +20,17 @@ class Materia(models.Model):
 
 	def __unicode__(self):
 		return self.nombre
+
+# Extender de User 
+class Usuario(models.Model):
+	user 			= models.ForeignKey(User, related_name='perfil', unique=True)
+	fechaNacimiento = models.DateField(blank=True,null=True)
+	idPrograma 		= models.ForeignKey(Programa)
+	semestre 		= models.IntegerField()
+	telefono 		= models.CharField(max_length=20,blank=True)
+	materias 		= models.ManyToManyField(Materia)
+	def __unicode__(self):
+		return self.user.first_name+" "+self.user.last_name
 
 class Profesor(models.Model):
 	nombre 		= models.CharField(max_length=100)

@@ -19,7 +19,6 @@ def index_view(request):
 		return render_to_response('index.html', locals(), context_instance = RequestContext(request) )
 
 
-
 # controla el login de usuario
 # Si es usuario administrador lo envia a la vista de admin
 # si es usuario convencional lo envia al home (perfil de usuario)
@@ -41,14 +40,10 @@ def login_view(request):
 	return render_to_response('index.html', locals(), context_instance = RequestContext(request) )
 
 
-
 # Controlador del Cierre de Sesion
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
-
-
-
 
 
 # Controlador de registro de usuario
@@ -89,3 +84,21 @@ def home_view(request):
 				return render_to_response('datos.html',locals(),context_instance = RequestContext(request))
 		else:
 			return HttpResponseRedirect('/')
+
+#inicio Darwin
+def lista_materias(request):
+	materias=Materia.objects.all()
+	usuario = request.user
+	perfil= Usuario.objects.get(user=usuario)
+	inscripciones= perfil.materias.all()
+	return render_to_response('semaforo.html', {'usuario':usuario, 'lista':materias, 'perfil':perfil, 'matInsc':inscripciones})
+#fin Darwin
+
+def profile_view(request):
+	if request.user.is_authenticated():
+		current_user = request.user
+		extended_user= Usuario.objects.get(user=current_user)
+		return render_to_response('profile.html', locals(),context_instance = RequestContext(request))	
+	else:
+		return HttpResponseRedirect('/')
+
