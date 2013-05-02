@@ -5,7 +5,7 @@ TEMPLATE_DEBUG = DEBUG
 
 #rutadelarchivo
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
-
+AUTH_PROFILE_MODULE = 'home.Usuario'
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
