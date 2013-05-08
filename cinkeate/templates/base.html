@@ -6,11 +6,9 @@
 		<title>Cinkeate - {% block titulo %}{% endblock titulo %}</title>
 		<meta name="description" content="Plataforma académica, búsqueda de parciales, ayuda didáctica.">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="{{STATIC_URL}}css/normalize.css">
-		<script src="{{STATIC_URL}}js/modernizr-min.js"></script>
-		<script src="/media/js/jquery-1.9.1.min.js"></script>
-		<script src="/media/bootstrap/js/bootstrap.js"></script>
-		<link rel="stylesheet" type="text/css" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/normalize.css">
+		<script src="/media/js/modernizr-min.js"></script>
+		<link rel="stylesheet" href="/media/css/style.css" />
 		<link rel="stylesheet" href="/media/bootstrap/css/bootstrap.css">
 
 
@@ -20,7 +18,7 @@
 	<body >
 		<header class="header">
 			<div class="logo">
-				<img src="{{STATIC_URL}}img/logo.png" alt="Logo Cinkeate">
+				<img src="/media/images/logo1.png" alt="Logo Cinkeate">
 			</div>
 			{% if user.is_authenticated %}
 			<nav >
@@ -39,7 +37,9 @@
 			</div>
 		</section>
 		<footer class="footer">
-			<h4 >&copy DFHS Group</h4>
+			<h4 >&copy DEHFS Group</h4>
 		</footer>
 	</body>
+	<script src="/media/js/jquery-1.9.1.min.js"></script>
+	<script src="/media/bootstrap/js/bootstrap.js"></script>
 </html>
