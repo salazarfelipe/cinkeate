@@ -62,7 +62,7 @@ def register_view(request):
 
 
 
-#Controlador de vista de home *Vista de Perfil proximamente
+#Controlador de vista de home
 def home_view(request):
 	if request.method == 'POST':
 		fecha = request.POST['fecha']
@@ -80,7 +80,7 @@ def home_view(request):
 					user = request.user
 					usuario= Usuario.objects.get(user=user)
 					materias = usuario.materias.all()
-					return render_to_response('profile.html', locals(),context_instance = RequestContext(request))
+					return render_to_response('home.html', locals(),context_instance = RequestContext(request))
 			except:
 				programas = Programa.objects.all()
 				semestres = range(1,11)
