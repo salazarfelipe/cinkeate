@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
-from cinkeate.apps.home.models import Materia, Usuario, Programa
+from cinkeate.apps.home.models import Materia, Usuario, Programa, Profesor, Parcial
 from django.contrib.auth.models import User
 
 # Controla el index o pagina inicial
@@ -97,3 +97,16 @@ def lista_materias(request):
 	return render_to_response('semaforo.html', {'usuario':usuario, 'lista':materias, 'perfil':perfil, 'matInsc':inscripciones})
 #fin Darwin
 
+
+#Busqueda
+def search_view(request):
+	if request.user.is_authenticated():
+		if request.user.is_staff:
+			return HttpResponseRedirect('/admin')
+		else:
+			materias=Materia.objects.all()
+			profesores=Profesor.objects.all()
+			notas=Parcial.objects.all()
+			return render_to_response('searchview.html', locals(),context_instance = RequestContext(request))	
+	else:
+		return HttpResponseRedirect('/')

@@ -32,7 +32,6 @@ p{
 }
 .wrapper{
 	margin:20px auto;
-	min-height:550px;
 }
 .box{
 	width:49%;
@@ -244,8 +243,6 @@ select{height: 38px !important;width: 80% !important}
  	bottom: 0;
  	color: white;
  	height: 50px;
- 	left: 0;
- 	position: fixed;
  	text-align: center;
  	text-shadow: 1px 1px 1px #333;
  	width: 100%;

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+  Buscar Parciales
+{% endblock titulo %}
+
+{% block contenido %}
+<div style="text-align:center">
+  <div style="display:inline-block">
+    <p>Búsqueda por Materia</p>
+    <select name="selectMateria" id="materias">
+        {% for materia in materias %}
+          <option value="{{materia.nombre}}">{{materia}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div style="display:inline-block">
+  <p>Búsqueda por Profesor</p>
+    <select name="selectProfesor" id="profesores">
+        {% for profesor in profesores %}
+          <option value="{{profesor.nombre}}">{{profesor}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div style="display:inline-block">
+  <p>Búsqueda por Nota</p>
+    <select name="selectNota" id="notas">
+        {% for nota in notas %}
+          <option value="{{nota.nota}}">{{nota}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div style="display:inline-block">
+    <p>Búsqueda por Semestre</p>
+    <select name="selectSemestre" id="materias">
+        {% for materia in materias %}
+          <option value="{{materia.semestre}}">{{materia.semestre}}</option>
+        {% endfor %}
+    </select>
+  </div>
+</div>
+<div style="width:100%;background-color:grey">
+  Hola
+</div>
+<hr>
+<footer style="text-align:center">
+  <button>Perfil</button>
+  <button>Subir Parcial</button>
+  <button>Semáforo</button>
+  <button>Búsqueda</button>
+</footer>
+{% endblock contenido %}
