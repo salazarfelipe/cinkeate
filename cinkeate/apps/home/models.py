@@ -121,7 +121,3 @@ class Comentario_Parcial(models.Model):
 
 	class Meta:
 		verbose_name_plural=u'Comentarios de parciales'
-  	
-"""
-Las clases que llamo desde un ForeignKey tienen que estar arriba en el codigo  :S wtf?
-"""

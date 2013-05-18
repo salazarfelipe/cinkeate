@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 {% block contenido %}
-	<h2>Bienvenido de vuelta {{current_user.username}}!</h2>
-	<p>Tu ultimo inicio de sesión fue el {{current_user.last_login}}</br>
-	Eres parte del programa de {{extended_user.idPrograma}} y estás en el semestre {{extended_user.semestre}}, o tal vez en {{extended_user.semestre}} factorial</br>
-	</p>
-
-	{%if current_user.is_staff %}
-		<p>Eres parte del staff? D: que cool!</p>
-	{% endif %}
-	<ul>	
-	</ul>
+<div class="container">
+	<div class="span12">
+		<div class="span4">
+			<h3>Bienvenido de vuelta {{user.username}}!</h3>
+			<p>Tu último inicio de sesión fue el {{user.last_login}}</br>
+			<div>
+                <img src="{{ MEDIA_URL}}{{usuario.foto}}" alt="Imagen no encontrada">
+            </div>
+			<p>Eres parte del programa {{usuario.idPrograma}} y estás en el semestre {{usuario.semestre}}.</p>
+		</div>
+		<div class="span4">
+			<p class="text-info">
+				Aquí encontrarás las materias a las que estás inscrito
+			</p>
+			<ul>
+				{% for m in materias %}
+					<li>{{m.nombre}} - {{usuario.idPrograma}}{{m.codigo}} - Semestre {{m.semestre}}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="span4">
+			<p class="text-info">
+				Este espacio es para notificaciones (?)
+			</p>
+		</div>
+	</div>
+</div>
 {% endblock contenido %}

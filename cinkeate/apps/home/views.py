@@ -77,7 +77,10 @@ def home_view(request):
 		if request.user.is_authenticated():
 			try:
 				if request.user.get_profile():
-					return render_to_response('home.html', context_instance = RequestContext(request))	
+					user = request.user
+					usuario= Usuario.objects.get(user=user)
+					materias = usuario.materias.all()
+					return render_to_response('profile.html', locals(),context_instance = RequestContext(request))
 			except:
 				programas = Programa.objects.all()
 				semestres = range(1,11)
@@ -93,12 +96,4 @@ def lista_materias(request):
 	inscripciones= perfil.materias.all()
 	return render_to_response('semaforo.html', {'usuario':usuario, 'lista':materias, 'perfil':perfil, 'matInsc':inscripciones})
 #fin Darwin
-
-def profile_view(request):
-	if request.user.is_authenticated():
-		current_user = request.user
-		extended_user= Usuario.objects.get(user=current_user)
-		return render_to_response('profile.html', locals(),context_instance = RequestContext(request))	
-	else:
-		return HttpResponseRedirect('/')
 
