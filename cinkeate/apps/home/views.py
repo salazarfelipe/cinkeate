@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
-from cinkeate.apps.home.models import Materia, Usuario, Programa, Profesor, Parcial
+from cinkeate.apps.home.models import Materia, Usuario, Programa, Profesor, Parcial, Hoja_Parcial
 from django.contrib.auth.models import User
 
 # Controla el index o pagina inicial
@@ -110,3 +110,52 @@ def search_view(request):
 			return render_to_response('searchview.html', locals(),context_instance = RequestContext(request))	
 	else:
 		return HttpResponseRedirect('/')
+
+#Crear un nuevo examen
+def nuevo_examen_view(request):
+	if request.user.is_authenticated():
+		if request.method == 'POST':
+			numeroParcial = request.POST['numeroParcial']
+			materia = request.POST['materia']
+			idMateria = Materia.objects.get(nombre=materia)
+			usuario = request.user
+			idUsuario = Usuario.objects.get(user=usuario)
+			profesor = request.POST['profesor']
+			idProfesor = Profesor.objects.get(id=profesor)
+			dificultad = request.POST['dificultad']
+			numCalificaciones = 0
+			calificacion = 0
+			nota = request.POST['nota']
+			fecha = request.POST['fecha']
+			parcial = Parcial(numeroParcial=numeroParcial,idMateria=idMateria,idUsuario=idUsuario,idProfesor=idProfesor,dificultad=dificultad,numCalificaciones=numCalificaciones,calificacion=calificacion,nota=nota,fecha=fecha)
+			parcial.save()
+			ctx = {'parcial':parcial}
+			return render_to_response('datosHoja.html',ctx,context_instance=RequestContext(request))
+		else:
+			numerosParciales = range(1,9)
+			materias = Materia.objects.all()
+			profesores = Profesor.objects.all()
+			dificultades = range(1,5)
+			notas = range(0,5)
+			return render_to_response('datosParcial.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
+
+#crear una nueva hoja
+def nueva_hoja_view(request):
+	if request.user.is_authenticated():
+		if request.method == 'POST':
+			for afile in request.FILES.getlist('archivo'):
+				numeroParcial = request.POST['numeroParcial']
+				parcial = Parcial.objects.get(id = numeroParcial)
+				archivo = afile
+				content_type = afile.content_type
+				hoja = Hoja_Parcial(idParcial=parcial, archivo=archivo, content_type=content_type)
+				hoja.save()
+			return HttpResponseRedirect('/')
+		else:
+			return render_to_response('datosHoja.html',locals(),context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect('/')
+
+

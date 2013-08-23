@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block scripts %}
+    <script src="/media/js/cufon-yui.js" type="text/javascript"></script>
+    <script src="/media/js/ChunkFive_400.font.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        Cufon.replace('h1',{ textShadow: '1px 1px #fff'});
+        Cufon.replace('h2',{ textShadow: '1px 1px #fff'});
+        Cufon.replace('h3',{ textShadow: '1px 1px #000'});
+        Cufon.replace('.back');
+    </script>
+{% endblock scripts %}
+{% block contenido %}
+<h2>Ingrese los datos del <span>Parcial</span></h2>        
+    <section class="content">
+        <div id="form_wrapper" class="form_wrapper" style="width:550px;margin-bottom:70px">
+            <form class="register active" method="POST" action="/parcial/">
+                {% csrf_token %}
+                <fieldset>      
+                    <h3>Datos del Nuevo Examen</h3>
+                    <div class="column">                        
+                        <label>NumeroExamen:</label>
+                            <select name="numeroParcial" id="">
+                                {% for i in numerosParciales %}
+                                <option value="{{i}}" name="numeroParcial">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        <div>
+                            <label>Materia:</label>
+                            <select name="materia" id="">
+                                {% for i in materias %}
+                                    <option value="{{i}}" name="materia">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div>
+                            <label>Profesor:</label>
+                            <select name="profesor" id="">
+                                {% for i in profesores %}
+                                    <option value="{{i.id}}" name="profesor">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        </div>
+                        <div>
+                            <label>Dificultad:</label>
+                            <select name="dificultad" id="">
+                                {% for i in dificultades %}
+                                    <option value="{{i}}" name="dificultad">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        </div>
+                    </div>
+                    <div class="column"
+                        <div>
+                            <label>Nota:</label>
+                            <select name="nota" id="">
+                                {% for i in notas %}
+                                    <option value="{{i}}" name="nota">{{i}}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="error">This is an error</span>
+                        </div>
+                        <div class="column">
+                            <div>
+                                <label>Fecha Realizacion de Examen:</label>
+                                <input type="date" name="fecha" required/>
+                                <span class="error" >This is an error</span>
+                            </div>
+                        </div>
+                        <div class="bottom">
+                        <div class="remember">
+                            <input type="checkbox" />
+                            <span>Send me updates</span>
+                        </div>
+                        <input type="submit" value="Crear Examen" />
+                        <div class="clear"></div>
+                    </div>
+                    </div>
+                </fieldset>
+            </form>
+        </section>
+    </div>      
+    </section>
+{% endblock contenido %}
