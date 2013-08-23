@@ -8,6 +8,13 @@
         Cufon.replace('h3',{ textShadow: '1px 1px #000'});
         Cufon.replace('.back');
     </script>
+    <script type="text/javascript">
+     function eligenota(desde,hasta){
+        for(var i=desde;i<=hasta;i++){
+            document.write("<option>"+i/10+"</option>");
+        }
+    }
+    </script>
 {% endblock scripts %}
 {% block contenido %}
 <h2>Ingrese los datos del <span>Parcial</span></h2>        
@@ -47,24 +54,28 @@
                         </div>
                         <div>
                             <label>Dificultad:</label>
-                            <select name="dificultad" id="">
-                                {% for i in dificultades %}
-                                    <option value="{{i}}" name="dificultad">{{i}}</option>
-                                {% endfor %}
+                            <select name="dificultad">
+                                    <option value="1">Refacil</option>
+                                    <option value="2">Facil</option>
+                                    <option value="3">Normal</option>
+                                    <option value="4">Dificil</option>
+                                    <option value="5">Redificil</option>
                             </select>
                             <span class="error">This is an error</span>
                         </div>
                     </div>
-                    <div class="column"
+                    <div class="column">
                         <div>
                             <label>Nota:</label>
-                            <select name="nota" id="">
-                                {% for i in notas %}
-                                    <option value="{{i}}" name="nota">{{i}}</option>
-                                {% endfor %}
+                            <select name="nota">
+                                <script type="text/javascript">
+                                //<option value=>{{i}}</option>
+                                eligenota(0,50);
+                                </script>
                             </select>
                             <span class="error">This is an error</span>
                         </div>
+                    </div>
                         <div class="column">
                             <div>
                                 <label>Fecha Realizacion de Examen:</label>
@@ -73,10 +84,6 @@
                             </div>
                         </div>
                         <div class="bottom">
-                        <div class="remember">
-                            <input type="checkbox" />
-                            <span>Send me updates</span>
-                        </div>
                         <input type="submit" value="Crear Examen" />
                         <div class="clear"></div>
                     </div>

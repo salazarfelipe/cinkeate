@@ -135,7 +135,6 @@ def nuevo_examen_view(request):
 			numerosParciales = range(1,9)
 			materias = Materia.objects.all()
 			profesores = Profesor.objects.all()
-			dificultades = range(1,5)
 			notas = range(0,5)
 			return render_to_response('datosParcial.html',locals(),context_instance=RequestContext(request))
 	else:
