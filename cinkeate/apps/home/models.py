@@ -51,7 +51,7 @@ class Parcial(models.Model):
 	OPCIONES_DIFICULTAD = zip( range(1,6), ('Refacil','Facil','Normal','Dificil','Redificil'))
 	OPCIONES_NOTA = zip((num/10.0 for num in range(0,51,1)),(num/10.0 for num in range(0,51,1))) 
 	
-	numeroParcial = models.IntegerField( range (1,10)) # El numero del parcial eg: parcial 2 CISCO
+	numeroParcial = models.IntegerField(range (1,10)) # El numero del parcial eg: parcial 2 CISCO
 	idMateria = models.ForeignKey(Materia)
 	idUsuario = models.ForeignKey(Usuario)
 	idProfesor = models.ForeignKey(Profesor)
@@ -62,7 +62,7 @@ class Parcial(models.Model):
 	fecha = models.DateField(help_text='Aproximada')
 	fechaSubida = models.DateField(auto_now_add=True)
 	def __unicode__(self):
-		return "Parcial %s"%unicode(self.id)
+		return "Parcial %s"%unicode(self.numeroParcial)
 
 	class Meta:
 		verbose_name_plural=u'Parciales'
@@ -75,11 +75,10 @@ class Hoja_Parcial(models.Model):
 
 	idParcial = models.ForeignKey(Parcial)
 	archivo = models.FileField(upload_to=url)
-	#tipo = models.CharField(max_length=30)
-	numero = models.PositiveIntegerField() # Se pueden generar archivos pdf o comprimidos que unen los archivos en unno solo
-	formato = models.CharField(max_length=10) 
+	content_type = models.CharField(max_length=40)
+	numero_hoja = models.IntegerField() 
 	def __unicode__(self):
-		return "Hoja %d de %s" %(self.numero,unicode(self.idParcial))
+		return "Hoja %d de %s" %(self.idParcial.numeroParcial,unicode(self.idParcial))
 
 	class Meta:
 		verbose_name_plural=u'Hojas de Parciales'
@@ -121,7 +120,3 @@ class Comentario_Parcial(models.Model):
 
 	class Meta:
 		verbose_name_plural=u'Comentarios de parciales'
-  	
-"""
-Las clases que llamo desde un ForeignKey tienen que estar arriba en el codigo  :S wtf?
-"""
