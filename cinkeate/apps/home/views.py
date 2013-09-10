@@ -29,10 +29,7 @@ def login_view(request):
 		usuario = authenticate(username=username, password=password)
 		if usuario is not None and usuario.is_active:
 			login(request, usuario)
-			if usuario.is_staff:
-				return HttpResponseRedirect('/admin')
-			else:
-				return HttpResponseRedirect('/home')
+			return HttpResponseRedirect('/home')
 
 	except:
 		return HttpResponseRedirect('/')

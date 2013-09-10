@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-  Inicio
+	Inicio
 {% endblock titulo %}
 
 {% block contenido %}
@@ -14,7 +14,10 @@
 		</div>
 		<div class="span4">
 			<p class="text-info">
-				Aquí encontrarás las materias a las que estás inscrito
+				Aquí encontrarás las materias a las que estás inscrito:
+				{% for materia in user.materias  %}
+					{{materia.nombre}}
+				{% endfor %}
 			</p>
 			<ul>
 				{% for m in materias %}

@@ -9,6 +9,7 @@
   <div style="display:inline-block">
     <p>Búsqueda por Materia</p>
     <select name="selectMateria" id="materias">
+        <option></option>
         {% for materia in materias %}
           <option value="{{materia.nombre}}">{{materia}}</option>
         {% endfor %}
@@ -17,6 +18,7 @@
   <div style="display:inline-block">
   <p>Búsqueda por Profesor</p>
     <select name="selectProfesor" id="profesores">
+        <option></option>
         {% for profesor in profesores %}
           <option value="{{profesor.nombre}}">{{profesor}}</option>
         {% endfor %}
@@ -25,6 +27,7 @@
   <div style="display:inline-block">
   <p>Búsqueda por Nota</p>
     <select name="selectNota" id="notas">
+        <option></option>
         {% for nota in notas %}
           <option value="{{nota.nota}}">{{nota}}</option>
         {% endfor %}
@@ -33,6 +36,7 @@
   <div style="display:inline-block">
     <p>Búsqueda por Semestre</p>
     <select name="selectSemestre" id="materias">
+        <option></option>
         {% for materia in materias %}
           <option value="{{materia.semestre}}">{{materia.semestre}}</option>
         {% endfor %}
@@ -43,10 +47,4 @@
   Hola
 </div>
 <hr>
-<footer style="text-align:center">
-  <button>Perfil</button>
-  <button>Subir Parcial</button>
-  <button>Semáforo</button>
-  <button>Búsqueda</button>
-</footer>
 {% endblock contenido %}

@@ -9,6 +9,11 @@
         Cufon.replace('.back');
     </script>
 {% endblock scripts %}
+
+{% block titulo %}
+    Datos de Perfil
+{% endblock titulo %}
+
 {% block contenido %}
 <h2>Complemente sus datos de <span>Perfil</span></h2>        
     <section class="content">
@@ -44,8 +49,8 @@
                             <span class="error">This is an error</span>
                         </div>
                         <div>
-                            <label>Telefono:</label>
-                            <input type="text" name="telefono" required/>
+                            <label>Teléfono:</label>
+                            <input type="text" name="telefono"/>
                             <span class="error">This is an error</span>
                         </div>
                     </div>

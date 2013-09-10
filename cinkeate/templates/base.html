@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Cinkeate - {% block titulo %}{% endblock titulo %}</title>
+		<title>Cinkeate - {% block titulo %} Inicio {% endblock titulo %}</title>
 		<meta name="description" content="Plataforma académica, búsqueda de parciales, ayuda didáctica.">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="/media/css/normalize.css">
@@ -24,9 +24,15 @@
 			</div>
 			{% if user.is_authenticated %}
 			<nav >
+				<ul class="nav pull-left">
+					<a class="btn btn-info" href="{% url 'vistaHome' %}">Perfil</a>
+					<a class="btn btn-info" href="{% url 'vistaParcial' %}">Subir Parcial</a>
+					<a class="btn btn-info" href="{% url 'vistaSemaforo' %}">Semáforo</a>
+					<a class="btn btn-info" href="{% url 'vistaBusqueda' %}">Búsqueda</a>
+				</ul>
 				<ul class="nav pull-right">
 					<li><a href="/home">{{user.username}}</a></li>
-					<li><a href="/logout">Cerrar Sesion</a></li>
+					<li><a href="/logout">Cerrar Sesión</a></li>
 					<li><a href="/vistaBusqueda">Búsqueda</a></li>
 				</ul>
 			</nav>
@@ -39,7 +45,7 @@
 			</div>
 		</section>
 		<footer class="footer">
-			<h4 >&copy DEHFS Group</h4>
+			<h4 >&copy DHFS Group</h4>
 		</footer>
 	</body>
 </html>
