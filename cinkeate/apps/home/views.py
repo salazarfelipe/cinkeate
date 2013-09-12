@@ -1,9 +1,10 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import login, authenticate, logout
 from cinkeate.apps.home.models import Materia, Usuario, Programa, Profesor, Parcial, Hoja_Parcial
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 # Controla el index o pagina inicial
 # si no se ha iniciado sesion, renderuza la vista de index
@@ -45,18 +46,26 @@ def logout_view(request):
 
 # Controlador de registro de usuario
 def register_view(request):
-	if not request.user.is_authenticated():
-		if request.method == 'POST':
-			usuario = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], password=request.POST["pass"])
-			usuario.first_name = request.POST['nombre']
-			usuario.last_name = request.POST['apellido']
-			usuario.save()
-			return HttpResponseRedirect('/home')
-		else:
-			return HttpResponseRedirect('/')
-	else:
-		return HttpResponseRedirect('/')
-
+  if not request.user.is_authenticated():
+    if request.method == 'POST':
+      try:
+        userTest = User.objects.get(email=request.POST['email'])
+        if userTest:
+          emailExist = True
+          return render_to_response('index.html', locals(), context_instance = RequestContext(request) )
+        else:
+          usuario = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], password=request.POST["pass"])
+          usuario.first_name = request.POST['nombre']
+          usuario.last_name = request.POST['apellido']
+          usuario.save()
+          return HttpResponseRedirect('/home')
+      except IntegrityError,e:
+        userExist = True
+        return render_to_response('index.html', locals(), context_instance = RequestContext(request) )     
+    else:
+      return HttpResponseRedirect('/')
+  else:
+    return HttpResponseRedirect('/')
 
 
 #Controlador de vista de home

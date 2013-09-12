@@ -79,6 +79,8 @@
                         <label>Username o Email:</label>
                         <input type="text" name="username" required/>
                         <span class="error" id="username">Usario invalido</span>
+                        <span class="error" id="duplicateUsername">Este usuario ya existe</span>
+                        <span class="error" id="duplicateEmail">El Email ya esta registrado :(</span>
                     </div>
                     <div>
                         <label>Contraseña:</label>
@@ -94,9 +96,19 @@
                     </div>
                     {% if loginFailed %}
                         <script>
-                           document.getElementById('username').style.visibility = "visible";
-                            document.getElementById('password').style.visibility = "visible";
+                            document.getElementById('username').style.display = "block";
+                            document.getElementById('password').style.display = "block";
                         </script>
+                    {% endif %}
+                    {% if userExist %}
+                        <script>
+                            document.getElementById('duplicateUsername').style.display = "block";
+                        </script>                      
+                    {% endif %}
+                  {% if emailExist %}
+                        <script>
+                            document.getElementById('duplicateEmail').style.display = "block";
+                        </script>                      
                     {% endif %}
                 </fieldset>
             </form>
